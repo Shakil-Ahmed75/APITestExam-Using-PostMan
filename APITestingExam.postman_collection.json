@@ -1,0 +1,353 @@
+{
+	"info": {
+		"_postman_id": "8f02bbd6-f486-4b6f-a493-350031703f2a",
+		"name": "API Testing Exam",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20690349"
+	},
+	"item": [
+		{
+			"name": "Get Informantion Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//test case for Status Code Validation\r",
+							"\r",
+							"pm.test(\"Status code is Passed\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Create Student Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Status code is Passed\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"First_name Passed\", function () {   \r",
+							"    pm.expect(jsonData.first_name).to.eql(\"Shakil\");\r",
+							"});\r",
+							"pm.test(\"Middle_name Passed\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.middle_name).to.eql(\"Ahmed\");\r",
+							"});\r",
+							"pm.test(\"last_name Passed \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.last_name).to.eql(\"Shuvro\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date_of_birth Passed \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.date_of_birth).to.eql(\"23th Sept 1998\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"first_name\": \"Shakil\",\r\n\"middle_name\": \"Ahmed\",\r\n\"last_name\": \"Shuvro\",\r\n\"date_of_birth\": \"23th Sept 1998\"\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Student Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code Validation Passed\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"status and message field value validation Passed\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"update  data success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\":2664838,\r\n\"first_name\": \"Md \",\r\n\"middle_name\": \"Shakil \",\r\n\"last_name\": \"Ahmed \",\r\n\"date_of_birth\": \"1998/09/23\" \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific Student Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Status code is Passed\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches status\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"true\");\r",
+							"});\r",
+							"pm.test(\"First_name\", function () {\r",
+							" \r",
+							"    pm.expect(jsonData.data.first_name).to.eql(\"Md \");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Middle_name\", function () {\r",
+							" \r",
+							"    pm.expect(jsonData.data.middle_name).to.eql( \"Shakil \");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Last_name\", function () {\r",
+							" \r",
+							"    pm.expect(jsonData.data.last_name).to.eql( \"Ahmed \");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Date_of_birth\", function () {\r",
+							" \r",
+							"    pm.expect(jsonData.data.date_of_birth).to.eql(\"1998/09/23\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student Address Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Write a test case for Status Code Validation.\r",
+							"//Write a test case for status and message field value validation\r",
+							"\r",
+							"pm.test(\"Status Code Validation Passed\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body matches Status\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Add  data success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"Permanent_Address\": {\r\n\"House_Number\": \"sample string 1\",\r\n\"City\": \"sample string 2\",\r\n\"State\": \"sample string 3\",\r\n\"Country\": \"sample string 4\",\r\n\"PhoneNumber\": [\r\n{\r\n\"Std_Code\": \"sample string 1\",\r\n\"Home\": \"sample string 2\",\r\n\"Mobile\": \"sample string 3\"\r\n},\r\n{\r\n\"Std_Code\": \"sample string 1\",\r\n\"Home\": \"sample string 2\",\r\n\"Mobile\": \"sample string 3\"\r\n}\r\n]\r\n},\r\n\"stId\": 2664838\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/addresses",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Student Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Write a test case for Status Code Validat\r",
+							"// Write a test case for status and message field value validation\r",
+							"\r",
+							"pm.test(\"Status Code Validation\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Delete  data success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/studentsDetails/{{id1}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Final Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" var jsonData = pm.response.json();\r",
+							"pm.test(\"Status Code Validation\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Write a test case for (House Number, City, Country, Mobile) field value validation\r",
+							"\r",
+							"\r",
+							"pm.test(\"House Number Validation\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.House_Number).to.eql(\"sample string 1\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"City Validation\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.City).to.eql(\"sample string 2\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Country Validation\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.Country).to.eql(\"sample string 4\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mobile Validation\", function () {\r",
+							"    pm.expect(jsonData.data.Address[2].Permanent_Address.PhoneNumber[0].Mobile).to.eql(\"sample string 3\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/FinalStudentDetails/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"FinalStudentDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
